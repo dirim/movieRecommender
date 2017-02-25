@@ -1,0 +1,14 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
+<th:block layout:fragment="content">
+
+    <div calss="row">
+        <div class="user-info ui center aligned basic segment">
+            <div class="ui text container">
+                <img class="ui avatar image" src="/images/wireframe/square-image.png"/>
+                <h3 th:text="${user.username}"></h3>
+            </div>
+        </div>
+
+    </div>
+</th:block>
+</html>

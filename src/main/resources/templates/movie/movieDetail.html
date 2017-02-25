@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
+<th:block layout:fragment="content">
+
+    <!--<div class="row">-->
+        <!--<div class="ui container">-->
+            <!--<div class="content">-->
+                <!--<img class="ui big avatar image" src="/images/wireframe/square-image.png"/>-->
+
+                <!--<a class="header" th:text="${movie.movieName}">Title</a>-->
+                <!--<span th:text="${movie.year}"></span>-->
+                <!--<span th:text="${movie.catName}"></span>-->
+                <!--<span th:text="${movie.imdbRate}"></span>-->
+                <!--<span th:text="${movie.avgRate}"></span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="ui divided items">
+
+        <div class="item">
+            <div class="content">
+                <a class="header" th:text="${movie.movieName}"></a>
+                <div class="description">
+                    <p th:text="${movie.catName}"></p>
+                    <p th:text="${movie.year}"></p>
+                    <p th:text="${movie.imdbRate}"></p>
+                </div>
+                <div class="extra">
+                    <div class="ui right floated">
+                       See Trailer
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+</html>

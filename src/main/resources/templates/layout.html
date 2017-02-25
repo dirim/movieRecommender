@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/semantic.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/semantic-overrides.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/icon.min.css}"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script th:src="@{/js/semantic.min.js}"></script>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+</head>
+
+<body data-page="dashboard">
+
+<div class="ui inverted  menu">
+    <div class="right menu">
+        <div sec:authorize="isAuthenticated()">
+            <form class="ui form" th:action="@{/users/logout}" method="post">
+                <button class="ui black button" type="submit">Log Out</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="ui grid container">
+    <div class="four wide column">
+        <div class="ui left fixed vertical inverted menu">
+            <a class="item" th:href="@{/}">
+                <div class="icon">
+                    <i class="home large icon"></i>
+                </div>
+            </a>
+            <a class="item" th:href="@{/movies}">
+                Movies List
+            </a>
+        </div>
+    </div>
+
+    <div class="twelve wide column">
+        <th:block layout:fragment="content"/>
+    </div>
+</div>
+
+</body>
+</html>
