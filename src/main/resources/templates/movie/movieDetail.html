@@ -1,38 +1,50 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
 <th:block layout:fragment="content">
 
-    <!--<div class="row">-->
-        <!--<div class="ui container">-->
-            <!--<div class="content">-->
-                <!--<img class="ui big avatar image" src="/images/wireframe/square-image.png"/>-->
-
-                <!--<a class="header" th:text="${movie.movieName}">Title</a>-->
-                <!--<span th:text="${movie.year}"></span>-->
-                <!--<span th:text="${movie.catName}"></span>-->
-                <!--<span th:text="${movie.imdbRate}"></span>-->
-                <!--<span th:text="${movie.avgRate}"></span>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
     <div class="ui divided items">
 
         <div class="item">
-            <div class="content">
+            <div class="content movieDetail">
+                <input type="hidden" name="id" th:value="${movie.id}"/>
+
                 <a class="header" th:text="${movie.movieName}"></a>
                 <div class="description">
                     <p th:text="${movie.catName}"></p>
                     <p th:text="${movie.year}"></p>
                     <p th:text="${movie.imdbRate}"></p>
                 </div>
-                <div class="extra">
-                    <div class="ui right floated">
-                       See Trailer
+
+                <div class="ui dropdown" th:field="*{movie.rates.rate}">
+                    <div class="text">Ratings</div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <div class="item">1</div>
+                        <div class="item">2</div>
+                        <div class="item">3</div>
+                        <div class="item">4</div>
+                        <div class="item">5</div>
+                        <div class="item">6</div>
+                        <div class="item">7</div>
+                        <div class="item">8</div>
+                        <div class="item">9</div>
+                        <div class="item">10</div>
                     </div>
                 </div>
+
+                <button class="ui rate button" type="submit">Rate</button>
+
+                <!--<div class="extra">-->
+                    <!--<div class="ui right floated">-->
+                       <!--See Trailer-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
         </div>
     </div>
+
+    <script>
+        $('.ui.dropdown').dropdown();
+    </script>
 
 </th:block>
 </html>

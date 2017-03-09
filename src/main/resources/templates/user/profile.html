@@ -2,13 +2,33 @@
 <th:block layout:fragment="content">
 
     <div calss="row">
-        <div class="user-info ui center aligned basic segment">
-            <div class="ui text container">
-                <img class="ui avatar image" src="/images/wireframe/square-image.png"/>
-                <h3 th:text="${user.username}"></h3>
+        <div class="user-info ui left aligned basic segment">
+            <div class="ui grid">
+                <div class="six wide column">
+                    <img class="ui avatar image" />
+                </div>
+                <div class="six wide column"></div>
+                <div class="four wide column">
+                    <i class="add user icon"></i>
+                    <!--<a th:href="@{'/users/' + ${user.username} + '/update'}">-->
+                        <!--<button class="ui right floated button">Update</button>-->
+                    <!--</a>-->
+                </div>
+            </div>
+
+            <div class="ui grid">
+                <div class="six wide column">
+                    <a th:text="${user.username}" th:href="@{'/users/' + ${user.username} + '/update'}"></a>
+                </div>
+                <div class="six wide column"></div>
+                <div class="four wide column">
+                    <a th:href="@{/}">
+                        <h5>Watching List</h5>
+                    </a>
+                </div>
             </div>
         </div>
-
     </div>
+
 </th:block>
 </html>

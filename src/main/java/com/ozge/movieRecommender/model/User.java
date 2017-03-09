@@ -5,13 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity(name = "appUser")
 public class User implements UserDetails {
@@ -27,13 +23,22 @@ public class User implements UserDetails {
 
 	private String password;
 
+	private int age;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	private Set<Movie> movies = new HashSet<>();
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Rate> rates;
+
 	public User() {
 	}
 
-	public User(String username, String password, String email) {
+	public User(String username, String password, String email, int age) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.age = age;
 	}
 
 	public User(String username) {
@@ -70,6 +75,30 @@ public class User implements UserDetails {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Set<Movie> getMovies() {
+		return movies;
+	}
+
+	public void setMovies(Set<Movie> movies) {
+		this.movies = movies;
+	}
+
+	public List<Rate> getRates() {
+		return rates;
+	}
+
+	public void setRates(List<Rate> rates) {
+		this.rates = rates;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	@Override

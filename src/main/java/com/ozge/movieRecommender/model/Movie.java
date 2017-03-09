@@ -1,8 +1,9 @@
 package com.ozge.movieRecommender.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by ozge on 21.02.2017.
@@ -26,7 +27,12 @@ public class Movie {
 
 	private double avgRate;
 
-	private int rate;
+	@ManyToMany(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "userId")
+	private Set<User> users = new HashSet<>();
+
+	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+	private List<Rate> rates;
 
 	public Movie() {
 	}
@@ -95,11 +101,19 @@ public class Movie {
 		this.avgRate = avgRate;
 	}
 
-	public int getRate() {
-		return rate;
+	public Set<User> getUsers() {
+		return users;
 	}
 
-	public void setRate(int rate) {
-		this.rate = rate;
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	public List<Rate> getRates() {
+		return rates;
+	}
+
+	public void setRates(List<Rate> rates) {
+		this.rates = rates;
 	}
 }

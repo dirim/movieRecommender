@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
+<th:block layout:fragment="content">
+
+    <form class="ui update form"  method="post" th:action="@{'/users/' + ${user.username} + '/update/'}"
+                                                 th:object="${user}" >
+
+        <h1>Update Information</h1>
+        <input type="hidden" th:field="*{id}" th:value="*{id}"/>
+
+            <div class="field">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" placeholder="Username"
+                       th:field="*{username}" th:value="*{username}" />
+            </div>
+
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" placeholder="Email"
+                       th:field="*{email}" th:value="*{email}" />
+            </div>
+
+            <div class="field">
+                <label for="age">Age</label>
+                <input type="text" class="form-control" id="age" placeholder="age"
+                       th:field="*{age}" th:value="*{age}" />
+            </div>
+
+            <button class="ui button" th:type="submit">Submit</button>
+    </form>
+
+</th:block>
+</html>

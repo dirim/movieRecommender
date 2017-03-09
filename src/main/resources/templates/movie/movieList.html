@@ -1,35 +1,66 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
 <th:block layout:fragment="content">
-    <div class="ui grid">
-        <div class="row"></div>
-        <div class="row">
-            <div class="six wide column">
-                <h1>Movies</h1>
-            </div>
-            <div class="six wide column"></div>
-        </div>
+    <!--<div class="ui grid">-->
+        <!--<div class="row"></div>-->
+        <!--<div class="row">-->
+            <!--<div class="six wide column">-->
+                <!--<h1>Movies</h1>-->
+            <!--</div>-->
+            <!--<div class="six wide column"></div>-->
+        <!--</div>-->
 
-        <div class="row">
-            <table class="ui celled table">
-                <thead>
-                <tr>
-                    <th>Movie Name</th>
-                    <th>Year</th>
-                    <th>CatName</th>
-                    <th>ImdbRate</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="movie :${movies}">
-                    <td><a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.movieName}"/></td>
-                    <td th:text="${movie.year}"></td>
-                    <td th:text="${movie.catName}"></td>
-                    <td th:text="${movie.imdbRate}"></td>
-                </tr>
-                </tbody>
-                <tfoot></tfoot>
-            </table>
+        <!--<div class="row">-->
+            <!--<table class="ui celled table">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th>Movie Name</th>-->
+                    <!--<th>Year</th>-->
+                    <!--<th>CatName</th>-->
+                    <!--<th>ImdbRate</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr th:each="movie :${movies}">-->
+                    <!--<td><a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.movieName}"/></td>-->
+                    <!--<td th:text="${movie.year}"></td>-->
+                    <!--<td th:text="${movie.catName}"></td>-->
+                    <!--<td th:text="${movie.imdbRate}"></td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--<tfoot></tfoot>-->
+            <!--</table>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="movies-wrapper">
+        <div class="ui basic segment">
+            <div class="ui link cards">
+                <div class="ui grid">
+
+                    <th:block th:each="movie : ${movies}">
+                        <div class="four wide column">
+
+
+                            <div class="ui card">
+                                <div class="content" >
+                                    <div class="header"><a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.movieName}" /></div>
+                                    <div class="meta">
+                                        <i class="add square icon"></i>
+                                    </div>
+                                    <div class="description" th:text="${movie.catName}"></div>
+                                    <div class="information" th:text="${movie.year}"></div>
+                                    <div class="information" th:text="${movie.avgRate}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+
+                </div>
+            </div>
         </div>
     </div>
+
+
+
 </th:block>
 </html>

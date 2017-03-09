@@ -1,0 +1,30 @@
+<!--<th:block th:fragment="allMovies(movies)" xmlns:th="http://www.w3.org/1999/xhtml">-->
+    <!--<div class="movies-wrapper">-->
+        <!--<div class="ui basic segment">-->
+            <!--<div class="ui link cards">-->
+                <!--<div class="ui grid">-->
+
+                    <!--<th:block th:each="movie : ${movies}">-->
+                        <!--<div class="four wide column">-->
+                            <!--<th:block th:include="movie/movieUtils::getMovie(${movies})"></th:block>-->
+                        <!--</div>-->
+                    <!--</th:block>-->
+
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</th:block>-->
+
+<!--<th:block th:fragment="getMovie(movie)" xmlns:th="http://www.w3.org/1999/xhtml">-->
+    <!--<div class="ui card">-->
+        <!--<div class="content" >-->
+            <!--<div class="header"><a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.movieName}" /></div>-->
+            <!--<div class="meta">-->
+
+            <!--</div>-->
+            <!--<div class="description" th:text="${movie.catName}"></div>-->
+            <!--<div class="information" th:text="${movie.year}"></div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</th:block>-->
