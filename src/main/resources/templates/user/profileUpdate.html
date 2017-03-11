@@ -2,7 +2,7 @@
 <th:block layout:fragment="content">
 
     <form class="ui update form"  method="post" th:action="@{'/users/' + ${user.username} + '/update/'}"
-                                                 th:object="${user}" >
+                                                th:object="${user}" >
 
         <h1>Update Information</h1>
         <input type="hidden" th:field="*{id}" th:value="*{id}"/>

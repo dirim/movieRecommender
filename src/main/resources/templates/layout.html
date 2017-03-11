@@ -19,11 +19,11 @@
 <div sec:authorize="isAuthenticated()">
     <div class="ui inverted  menu">
         <div class="right menu">
-            <!--<a class="item" th:href="@{'/users/' + ${user.username()}}">-->
-                <!--<div class="profile icon">-->
-                    <!--<i class="user large icon"></i>-->
-                <!--</div>-->
-            <!--</a>-->
+            <a class="item" th:href="@{'/users/' + ${user.username}}">
+                <div class="profile icon">
+                    <i class="user large icon"></i>
+                </div>
+            </a>
             <a class="item">
                 <div sec:authorize="isAuthenticated()">
                     <form class="ui form" th:action="@{/users/logout}" method="post">

@@ -24,14 +24,12 @@ public class MovieController {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String listMovies(Model model){
-
 		model.addAttribute("movies", this.movieRepository.findAll());
 		return "movie/movieList";
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String showMovie(Model model, @PathVariable("id") Long id){
-
 		model.addAttribute("movie", this.movieRepository.findOne(id));
 		return "movie/movieDetail";
 	}

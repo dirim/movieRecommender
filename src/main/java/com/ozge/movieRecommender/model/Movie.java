@@ -28,7 +28,6 @@ public class Movie {
 	private double avgRate;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "userId")
 	private Set<User> users = new HashSet<>();
 
 	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
