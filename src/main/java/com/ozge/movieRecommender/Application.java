@@ -25,11 +25,6 @@ public class Application {
 
 //	@Override
 //	public void run(String... strings) throws Exception {
-//		Stream.of("Sedat", "Tugce", "Ozge").forEach(name -> userRepository.save(new User(name)));
-//	}
-
-//	@Override
-//	public void run(String... strings) throws Exception {
 //
 //		Movie movie1 = new Movie("Kelebegin Ruyasi", 2015, "Drama", 1L, 7.9);
 //		this.movieRepository.save(movie1);

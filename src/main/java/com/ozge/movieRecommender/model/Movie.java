@@ -1,5 +1,7 @@
 package com.ozge.movieRecommender.model;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +27,7 @@ public class Movie {
 
 	private double imdbRate;
 
+	@Transient
 	private double avgRate;
 
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -42,6 +45,18 @@ public class Movie {
 		this.catName = catName;
 		this.imdbId = imdbId;
 		this.imdbRate = imdbRate;
+	}
+
+	@PostLoad
+	private void postLoad() {
+		//rates.stream().filter(rate -> rate.getMovie().getId().equals(this.id));
+
+		double sum = 0.0;
+		for (Rate rate: rates) {
+			sum += rate.getRate();
+		}
+
+		this.avgRate = Double.isNaN(sum / rates.size()) ? 0 : sum / rates.size();
 	}
 
 	public Long getId() {
@@ -92,6 +107,7 @@ public class Movie {
 		this.imdbRate = imdbRate;
 	}
 
+	@Transient
 	public double getAvgRate() {
 		return avgRate;
 	}

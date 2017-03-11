@@ -14,11 +14,9 @@ public class Rate {
 
 	private int rate;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Movie movie;
+	@ManyToOne(cascade = CascadeType.ALL) private Movie movie;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	private User user;
+	@ManyToOne(cascade = CascadeType.ALL) private User user;
 
 	public Rate() {
 	}

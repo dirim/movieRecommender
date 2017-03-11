@@ -11,27 +11,11 @@
                 <div class="description">
                     <p th:text="${movie.catName}"></p>
                     <p th:text="${movie.year}"></p>
-                    <p th:text="${movie.imdbRate}"></p>
+                    <p id="imdbRate" th:text="${movie.imdbRate}"></p>
+                    <p id="rate" th:if="${movie.avgRate} > 0" th:text="${#numbers.formatDecimal(movie.avgRate, 1, 1)}"></p>
                 </div>
 
-                <div class="ui dropdown" th:field="*{movie.rates.rate}">
-                    <div class="text">Ratings</div>
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <div class="item">1</div>
-                        <div class="item">2</div>
-                        <div class="item">3</div>
-                        <div class="item">4</div>
-                        <div class="item">5</div>
-                        <div class="item">6</div>
-                        <div class="item">7</div>
-                        <div class="item">8</div>
-                        <div class="item">9</div>
-                        <div class="item">10</div>
-                    </div>
-                </div>
-
-                <button class="ui rate button" type="submit">Rate</button>
+                <div class="ui star rating" th:attr="data-rating=${userRate.intValue()}" data-max-rating="5"></div>
 
                 <!--<div class="extra">-->
                     <!--<div class="ui right floated">-->
@@ -42,8 +26,40 @@
         </div>
     </div>
 
-    <script>
-        $('.ui.dropdown').dropdown();
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const movieId = [[${movie.id}]];
+        const userId = [[${user.id}]];
+        /*]]>*/
+
+        const rate = $('.ui.rating');
+        rate.rating();
+        rate.click(function () {
+            const rateValue = rate.rating('get rating');
+            const rateObject = {
+                rate: rateValue,
+                movieId: movieId,
+                userId: userId
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/movies/" + movieId + "/rates",
+                data: JSON.stringify(rateObject),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(data) {
+                    const rateField = document.getElementById('rate');
+                    if (rateField == null) {
+                        $('<p id="rate">' + data.toFixed(1) + '</p>').insertAfter("#imdbRate");
+                    } else {
+                        document.getElementById('rate').innerHTML = data.toFixed(1);
+                    }
+                }
+            });
+        })
     </script>
 
 </th:block>
