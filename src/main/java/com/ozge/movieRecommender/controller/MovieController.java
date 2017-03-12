@@ -64,6 +64,7 @@ public class MovieController {
 	@PostMapping(value = "/{id}/rates", produces = "application/json")
 	@ResponseBody
 	public double rateMovie(@PathVariable("id") Long id, @RequestBody RateDTO rateDto) {
+		//getting object from js is stored in RateDTO
 		Movie movie = movieRepository.findOne(rateDto.getMovieId());
 		User user = userRepository.findOne(rateDto.getUserId());
 		List<Rate> rates = movie.getRates();

@@ -27,6 +27,35 @@
                     </a>
                 </div>
             </div>
+            <div th:if="${nameRateMap.size() > 0}">
+                <div class="ui grid">
+                    <div class="one wide column">
+                    </div>
+                    <div class="eleven wide column">
+                        <fieldset>
+                            <legend>Watched Movie List</legend>
+                            <table class="ui celled table">
+                                <thead>
+                                <tr>
+                                    <th>Movie Name</th>
+                                    <th>Rate</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="nameRate : ${nameRateMap}">
+                                    <td th:text="${nameRate.key}"></td>
+                                    <td th:text="${nameRate.value}"></td>
+                                </tr>
+                                </tbody>
+                                <tfoot></tfoot>
+                            </table>
+
+                        </fieldset>
+                    </div>
+                    <div class="four wide column">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

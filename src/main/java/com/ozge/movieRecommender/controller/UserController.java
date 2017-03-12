@@ -1,5 +1,7 @@
 package com.ozge.movieRecommender.controller;
 
+import com.ozge.movieRecommender.model.Movie;
+import com.ozge.movieRecommender.model.Rate;
 import com.ozge.movieRecommender.model.User;
 import com.ozge.movieRecommender.model.dto.ProfileInfoDto;
 import com.ozge.movieRecommender.model.validator.RegisterValidator;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.*;
 
 @Controller
 @RequestMapping("/users")
@@ -72,11 +75,24 @@ public class UserController {
 
 
 	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
-	public String userProfile(@PathVariable("username") String username,
-								Model model){
+	public String userProfile(Model model, @PathVariable("username") String username){
 
-		User user = this.userService.getUserByUsername(username);
-		model.addAttribute("user", user);
+		//lazy initialization exception
+		User user = userService.getUserByUsername(username);
+		Set<Movie> watchedMovies =  user.getWatchedMovies();
+
+		Map<String, Integer> nameRateMap = new HashMap<>();
+
+		for (Movie movie: watchedMovies) {
+			for (Rate rate: movie.getRates()) {
+				if (rate.getUser().getId().equals(user.getId())) {
+					nameRateMap.put(movie.getMovieName(), rate.getRate());
+					break;
+				}
+			}
+		}
+
+		model.addAttribute("nameRateMap", nameRateMap);
 
 		return "user/profile";
 	}
