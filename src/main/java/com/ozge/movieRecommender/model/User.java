@@ -6,7 +6,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity(name = "appUser")
@@ -26,7 +25,7 @@ public class User implements UserDetails {
 	private int age;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	private Set<Movie> movies = new HashSet<>();
+	private Set<Movie> watchedMovies = new HashSet<>();
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Rate> rates;
@@ -77,12 +76,12 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
-	public Set<Movie> getMovies() {
-		return movies;
+	public Set<Movie> getWatchedMovies() {
+		return watchedMovies;
 	}
 
-	public void setMovies(Set<Movie> movies) {
-		this.movies = movies;
+	public void setWatchedMovies(Set<Movie> watchedMovies) {
+		this.watchedMovies = watchedMovies;
 	}
 
 	public List<Rate> getRates() {

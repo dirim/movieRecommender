@@ -1,7 +1,5 @@
 package com.ozge.movieRecommender.model;
 
-import org.hibernate.annotations.Formula;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -30,8 +28,8 @@ public class Movie {
 	@Transient
 	private double avgRate;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	private Set<User> users = new HashSet<>();
+ 	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "watchedMovies")
+	private Set<User> watchedUsers = new HashSet<>();
 
 	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
 	private List<Rate> rates;
@@ -116,12 +114,12 @@ public class Movie {
 		this.avgRate = avgRate;
 	}
 
-	public Set<User> getUsers() {
-		return users;
+	public Set<User> getWatchedUsers() {
+		return watchedUsers;
 	}
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
+	public void setWatchedUsers(Set<User> watchedUsers) {
+		this.watchedUsers = watchedUsers;
 	}
 
 	public List<Rate> getRates() {

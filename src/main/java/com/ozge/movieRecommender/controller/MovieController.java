@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -65,10 +66,33 @@ public class MovieController {
 	public double rateMovie(@PathVariable("id") Long id, @RequestBody RateDTO rateDto) {
 		Movie movie = movieRepository.findOne(rateDto.getMovieId());
 		User user = userRepository.findOne(rateDto.getUserId());
-		Rate rate = new Rate(rateDto.getRate(), movie, user);
-		rateRepository.save(rate);
 		List<Rate> rates = movie.getRates();
-		rates.add(rate);
+
+		boolean userVotedBefore = false;
+
+		for (Rate r: rates) {
+			if (r.getUser().getId().equals(user.getId())) {
+				userVotedBefore = true;
+				r.setRate(rateDto.getRate());
+				rateRepository.save(r);
+				break;
+			}
+		}
+
+		if (!userVotedBefore) {
+			Rate rate = new Rate(rateDto.getRate(), movie, user);
+			rateRepository.save(rate);
+			rates.add(rate);
+			Set<User> watchedUsers = movie.getWatchedUsers();
+			watchedUsers.add(user);
+			movie.setWatchedUsers(watchedUsers);
+			movieRepository.save(movie);
+			Set<Movie> watchedMovies = user.getWatchedMovies();
+			watchedMovies.add(movie);
+			user.setWatchedMovies(watchedMovies);
+			userRepository.save(user);
+		}
+
 		movie.setRates(rates);
 
 		if (movie.getAvgRate() == 0) {
