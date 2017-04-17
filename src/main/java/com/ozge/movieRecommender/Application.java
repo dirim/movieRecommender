@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.stream.Stream;
 
 @SpringBootApplication
-public class Application {
+public class Application{
 
 	@Autowired UserRepository userRepository;
 
@@ -28,11 +28,11 @@ public class Application {
 //
 //		Movie movie1 = new Movie("Kelebegin Ruyasi", 2015, "Drama", 1L, 7.9);
 //		this.movieRepository.save(movie1);
-//		Movie movie2 = new Movie("Yüzüklerin Efendisi", 2002, "Drama", 102L, 7.9);
+//		Movie movie2 = new Movie("Yüzüklerin Efendisi", 2002, "Adventure", 102L, 7.9);
 //		this.movieRepository.save(movie2);
 //		Movie movie3 = new Movie("Harry Potter", 2011, "Drama", 3001L, 10);
 //		this.movieRepository.save(movie3);
-//		Movie movie4 = new Movie("Hobbit", 2013, "Drama", 521L, 8.2);
+//		Movie movie4 = new Movie("Hobbit", 2013, "Adventure", 521L, 8.2);
 //		this.movieRepository.save(movie4);
 //		Movie movie5 = new Movie("Leon", 2000, "Drama", 1L, 7.9);
 //		this.movieRepository.save(movie5);

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -55,11 +56,24 @@ public class MovieController {
 			userRate = userRates.get(0).getRate();
 		}
 
+		//recommends movies
+		List<Movie> catMovies = new ArrayList<Movie>();
+
+		for(Movie m: movieRepository.findAll()){
+			if(m.getCatName().equals(movie.getCatName())){
+				if(m.getId() != movie.getId()){
+					catMovies.add(m);
+				}
+			}
+		}
+
+
+		model.addAttribute("catMovies", catMovies);
+
 		model.addAttribute("movie", movie);
 		model.addAttribute("userRate", userRate);
 		return "movie/movieDetail";
 	}
-
 
 	@PostMapping(value = "/{id}/rates", produces = "application/json")
 	@ResponseBody
@@ -102,4 +116,5 @@ public class MovieController {
 
 		return ((movie.getAvgRate() * (movie.getRates().size() - 1)) + rateDto.getRate()) / movie.getRates().size();
 	}
+
 }

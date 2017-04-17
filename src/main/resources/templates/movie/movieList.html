@@ -11,7 +11,11 @@
                                 <div class="content" >
                                     <div class="header"><a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.movieName}" /></div>
                                     <div class="meta">
-                                        <i class="add square icon"></i>
+                                        <button class="ui adding button">
+                                            <i class="add square icon"></i>
+                                                Add
+                                        </button>
+
                                     </div>
                                     <div class="description" th:text="${movie.catName}"></div>
                                     <div class="information" th:text="${movie.year}"></div>

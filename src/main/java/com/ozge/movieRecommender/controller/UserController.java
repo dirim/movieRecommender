@@ -83,6 +83,7 @@ public class UserController {
 
 		Map<String, Integer> nameRateMap = new HashMap<>();
 
+		//create watched list for user
 		for (Movie movie: watchedMovies) {
 			for (Rate rate: movie.getRates()) {
 				if (rate.getUser().getId().equals(user.getId())) {
@@ -92,6 +93,22 @@ public class UserController {
 			}
 		}
 
+    	//recommends user
+		List<User> similarUsers = new ArrayList<User>();
+		for(Rate userRate: user.getRates()){
+			for(Rate movieRate: userRate.getMovie().getRates()){
+				if(userRate.getRate() == movieRate.getRate() ||
+				   userRate.getRate()-1 == movieRate.getRate() ||
+				   userRate.getRate()+1 == movieRate.getRate()){
+					if(userRate.getUser().getId() != movieRate.getUser().getId()){
+						similarUsers.add(movieRate.getUser());
+					}
+
+				}
+			}
+		}
+
+		model.addAttribute("similarUsers", similarUsers);
 		model.addAttribute("nameRateMap", nameRateMap);
 
 		return "user/profile";
