@@ -7,7 +7,10 @@ import com.ozge.movieRecommender.model.dto.RateDTO;
 import com.ozge.movieRecommender.repository.MovieRepository;
 import com.ozge.movieRecommender.repository.RateRepository;
 import com.ozge.movieRecommender.repository.UserRepository;
+import com.ozge.movieRecommender.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -35,11 +38,24 @@ public class MovieController {
 	@Autowired
 	RateRepository rateRepository;
 
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String listMovies(Model model){
-		model.addAttribute("movies", this.movieRepository.findAll());
+	@Autowired
+	MovieService movieService;
+
+//	@RequestMapping(value = "", method = RequestMethod.GET)
+//	public String listMovies(Model model){
+//		model.addAttribute("movies", this.movieRepository.findAll());
+//		return "movie/movieList";
+//	}
+
+	@RequestMapping(value="",method=RequestMethod.GET)
+	public String list(Model model, Pageable pageable){
+		Page<Movie> movies = movieService.listAllByPage(pageable);
+		model.addAttribute("movies", movies);
+		model.addAttribute("size", movies.getTotalPages());
 		return "movie/movieList";
 	}
+
+
 
 	@GetMapping("/{id}")
 	public String showMovie(Model model, @AuthenticationPrincipal User user, @PathVariable("id") Long id){
