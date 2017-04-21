@@ -11,8 +11,8 @@
                 <div class="description">
                     <p th:text="${movie.catName}"></p>
                     <p th:text="${movie.year}"></p>
-                    <p id="imdbRate" th:text="${movie.imdbRate}"></p>
-                    <p id="rate" th:if="${movie.avgRate} > 0" th:text="${#numbers.formatDecimal(movie.avgRate, 1, 1)}"></p>
+                    Imdb Rate:<p id="imdbRate" th:text="${movie.imdbRate}"></p>
+                    Average Rate:<p id="rate" th:if="${movie.avgRate} > 0" th:text="${#numbers.formatDecimal(movie.avgRate, 1, 1)}"></p>
                 </div>
 
                 <div class="ui star rating" th:attr="data-rating=${userRate.intValue()}" data-max-rating="5"></div>
@@ -31,7 +31,7 @@
             <div class="ui link cards">
                 <div class="ui grid">
                     <th:block th:each="movie : ${catMovies}">
-                        <div class="four wide column">
+                        <div class="seven wide column">
                             <div class="ui card">
                                 <div class="content" >
                                     <div class="header"><a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.movieName}" /></div>

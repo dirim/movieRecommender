@@ -66,14 +66,11 @@
                     <div class="ui link cards">
                         <div class="ui grid">
                             <th:block th:each="user : ${similarUsers}">
-                                <div class="four wide column">
+                                <div class="five wide column">
                                     <div class="ui card">
                                         <div class="content" >
-                                            <div class="meta">
-                                                <i class="add square icon"></i>
-                                            </div>
-                                            <div class="description" th:text="${user.username}"></div>
-                                            <div class="information" th:text="${user.age}"></div>
+                                            <div class="description"><a th:href="@{'/users/' + ${user.id}}" th:text="${user.username}"/></div>
+                                            Age:<div class="information" th:text="${user.age}"></div>
                                         </div>
                                     </div>
                                 </div>

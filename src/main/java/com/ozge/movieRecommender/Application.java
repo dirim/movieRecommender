@@ -1,18 +1,22 @@
 package com.ozge.movieRecommender;
 
 import com.ozge.movieRecommender.model.Movie;
-import com.ozge.movieRecommender.model.User;
 import com.ozge.movieRecommender.repository.MovieRepository;
 import com.ozge.movieRecommender.repository.UserRepository;
+import feign.Feign;
+import feign.Param;
+import feign.RequestLine;
+import feign.gson.GsonDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.IntStream;
 
 @SpringBootApplication
-public class Application{
+public class Application {
 
 	@Autowired UserRepository userRepository;
 
@@ -25,18 +29,121 @@ public class Application{
 
 //	@Override
 //	public void run(String... strings) throws Exception {
+//		OMDB omdb = Feign.builder().decoder(new GsonDecoder()).target(OMDB.class, "http://www.omdbapi.com/");
+//		MovieDB movieDB = Feign.builder().decoder(new GsonDecoder()).target(MovieDB.class, "https://api.themoviedb.org");
 //
-//		Movie movie1 = new Movie("Kelebegin Ruyasi", 2015, "Drama", 1L, 7.9);
-//		this.movieRepository.save(movie1);
-//		Movie movie2 = new Movie("Yüzüklerin Efendisi", 2002, "Adventure", 102L, 7.9);
-//		this.movieRepository.save(movie2);
-//		Movie movie3 = new Movie("Harry Potter", 2011, "Drama", 3001L, 10);
-//		this.movieRepository.save(movie3);
-//		Movie movie4 = new Movie("Hobbit", 2013, "Adventure", 521L, 8.2);
-//		this.movieRepository.save(movie4);
-//		Movie movie5 = new Movie("Leon", 2000, "Drama", 1L, 7.9);
-//		this.movieRepository.save(movie5);
+//		IntStream.rangeClosed(1, 20).forEach(i -> {
+//			List<MovieDTO> idTitleList = movieDB.getMovies(i).getResults();
+//			idTitleList.forEach(r -> {
+//				Movie movie = new Movie();
+//				movie.setMovieName(r.getTitle());
+//
+//				String imdbId = movieDB.getIMDBId(r.getId()).getImdb_id();
+//				OMDBMovie movieDetails = omdb.getMovie(imdbId);
+//				movie.setImdbId(imdbId);
+//				movie.setImdbRate(movieDetails.getImdbRating());
+//				movie.setCatName(movieDetails.getGenre().split(",")[0]);
+//				movie.setYear(movieDetails.getYear());
+//				movie.setPoster(movieDetails.getPoster());
+//				movieRepository.save(movie);
+//			});
+//		});
 //	}
-
-
 }
+
+//interface MovieDB {
+//	@RequestLine("GET /3/movie/top_rated?api_key=bdbca2d9594f7c83bd57ac4914388934&language=en-US&page={page}")
+//	Response getMovies(@Param("page") int page);
+//
+//	@RequestLine("GET /3/movie/{movieId}?api_key=bdbca2d9594f7c83bd57ac4914388934&language=en-US")
+//	MovieIMDB getIMDBId(@Param("movieId") int movieId);
+//}
+//
+//interface OMDB {
+//	@RequestLine("GET ?i={imdbId}")
+//	OMDBMovie getMovie(@Param("imdbId") String imdbId);
+//}
+//
+//class MovieIMDB {
+//	private String imdb_id;
+//
+//	public String getImdb_id() {
+//		return imdb_id;
+//	}
+//
+//	public void setImdb_id(String imdb_id) {
+//		this.imdb_id = imdb_id;
+//	}
+//}
+//
+//class MovieDTO {
+//	private int id;
+//	private String title;
+//
+//	public int getId() {
+//		return id;
+//	}
+//
+//	public void setId(int id) {
+//		this.id = id;
+//	}
+//
+//	public String getTitle() {
+//		return title;
+//	}
+//
+//	public void setTitle(String title) {
+//		this.title = title;
+//	}
+//}
+//
+//class OMDBMovie {
+//	private double imdbRating;
+//	private String Genre;
+//	private int Year;
+//	private String Poster;
+//
+//	public int getYear() {
+//		return Year;
+//	}
+//
+//	public void setYear(int year) {
+//		Year = year;
+//	}
+//
+//	public String getPoster() {
+//		return Poster;
+//	}
+//
+//	public void setPoster(String poster) {
+//		Poster = poster;
+//	}
+//
+//	public String getGenre() {
+//		return Genre;
+//	}
+//
+//	public void setGenre(String genre) {
+//		Genre = genre;
+//	}
+//
+//	public double getImdbRating() {
+//		return imdbRating;
+//	}
+//
+//	public void setImdbRating(double imdbRating) {
+//		this.imdbRating = imdbRating;
+//	}
+//}
+//
+//class Response {
+//	List<MovieDTO> results;
+//
+//	public List<MovieDTO> getResults() {
+//		return results;
+//	}
+//
+//	public void setResults(List<MovieDTO> results) {
+//		this.results = results;
+//	}
+//}

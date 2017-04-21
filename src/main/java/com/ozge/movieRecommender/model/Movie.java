@@ -21,9 +21,11 @@ public class Movie {
 
 	private String catName;
 
-	private Long imdbId;
+	private String imdbId;
 
 	private double imdbRate;
+
+	private String poster;
 
 	@Transient
 	private double avgRate;
@@ -37,7 +39,7 @@ public class Movie {
 	public Movie() {
 	}
 
-	public Movie(String movieName, int year, String catName, Long imdbId, double imdbRate) {
+	public Movie(String movieName, int year, String catName, String imdbId, double imdbRate) {
 		this.movieName = movieName;
 		this.year = year;
 		this.catName = catName;
@@ -89,11 +91,11 @@ public class Movie {
 		this.catName = catName;
 	}
 
-	public Long getImdbId() {
+	public String getImdbId() {
 		return imdbId;
 	}
 
-	public void setImdbId(Long imdbId) {
+	public void setImdbId(String imdbId) {
 		this.imdbId = imdbId;
 	}
 
@@ -128,5 +130,13 @@ public class Movie {
 
 	public void setRates(List<Rate> rates) {
 		this.rates = rates;
+	}
+
+	public String getPoster() {
+		return poster;
+	}
+
+	public void setPoster(String poster) {
+		this.poster = poster;
 	}
 }
