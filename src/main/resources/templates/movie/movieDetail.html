@@ -4,18 +4,46 @@
     <div class="ui divided items">
 
         <div class="item">
+
+            <img class="ui circular image" th:src="${movie.poster}"/>
+
             <div class="content movieDetail">
                 <input type="hidden" name="id" th:value="${movie.id}"/>
 
-                <a class="header" th:text="${movie.movieName}"></a>
+               <font  th:size="6">
+                   <a class="header" th:text="${movie.movieName}"></a>
+               </font>
+
                 <div class="description">
-                    <p th:text="${movie.catName}"></p>
-                    <p th:text="${movie.year}"></p>
-                    Imdb Rate:<p id="imdbRate" th:text="${movie.imdbRate}"></p>
-                    Average Rate:<p id="rate" th:if="${movie.avgRate} > 0" th:text="${#numbers.formatDecimal(movie.avgRate, 1, 1)}"></p>
+                    <!--<p><i th:text="${movie.catName}"></i></p>-->
+                    <!--<p th:text="${movie.year}"></p>-->
+
+                    <h2 th:inline="text" >
+                        [[${movie.catName}]] -
+                        <small th:text="${movie.year}">Year</small>
+                    </h2>
+
+                    <!--Imdb Rate:<p id="imdbRate" th:text="${movie.imdbRate}"></p>-->
+                    <!--Average Rate:<p id="rate" th:if="${movie.avgRate} > 0" th:text="${#numbers.formatDecimal(movie.avgRate, 1, 1)}"></p>-->
                 </div>
 
-                <div class="ui star rating" th:attr="data-rating=${userRate.intValue()}" data-max-rating="5"></div>
+                <div class="row" id="imdbRateRow">
+                    <h4 th:inline="text" >
+                        Imdb Rate:
+                        <small th:text="${movie.imdbRate}"></small>
+                    </h4>
+
+                </div>
+
+                <div class="row" id="avgRateRow" th:if="${movie.avgRate} > 0">
+                    <h4 th:inline="text">
+                        Average Rate:
+                        <small id="rate" th:text="${#numbers.formatDecimal(movie.avgRate, 1, 1)}"></small>
+                    </h4>
+                </div>
+
+
+                <div class="ui huge star rating" th:attr="data-rating=${userRate.intValue()}" data-max-rating="5"></div>
 
                 <!--<div class="extra">-->
                     <!--<div class="ui right floated">-->
@@ -26,13 +54,18 @@
         </div>
     </div>
 
+
+    <h1>You can also watch these movies...</h1>
     <div class="movies-wrapper">
         <div class="ui basic segment">
             <div class="ui link cards">
                 <div class="ui grid">
                     <th:block th:each="movie : ${catMovies}">
-                        <div class="seven wide column">
+                        <div class="three wide column">
                             <div class="ui card">
+                                <div class="image">
+                                    <img th:src="${movie.poster}"/>
+                                </div>
                                 <div class="content" >
                                     <div class="header"><a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.movieName}" /></div>
                                     <div class="meta">
@@ -77,7 +110,7 @@
                 success: function(data) {
                     const rateField = document.getElementById('rate');
                     if (rateField == null) {
-                        $('<p id="rate">' + data.toFixed(1) + '</p>').insertAfter("#imdbRate");
+                        $('<div class="row" id="avgRateRow"><h4 th:inline="text">Average Rate: <small id="rate">' + data.toFixed(1) + '</small></h4></div>').insertAfter('#imdbRateRow');
                     } else {
                         document.getElementById('rate').innerHTML = data.toFixed(1);
                     }

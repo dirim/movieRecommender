@@ -8,6 +8,9 @@
                     <th:block th:each="movie : ${movies}">
                         <div class="four wide column">
                             <div class="ui card">
+                                <div class="image">
+                                    <img th:src="${movie.poster}"/>
+                                </div>
                                 <div class="content" >
                                     <div class="header"><a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.movieName}" /></div>
                                     <div class="meta">
