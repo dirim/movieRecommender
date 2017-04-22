@@ -10,11 +10,10 @@ import com.ozge.movieRecommender.repository.MovieRepository;
 import com.ozge.movieRecommender.repository.RateRepository;
 import com.ozge.movieRecommender.repository.UserRepository;
 import com.ozge.movieRecommender.repository.WatchingMovieRepository;
-import com.ozge.movieRecommender.service.MovieService;
+import com.ozge.movieRecommender.service.MovieEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,15 +40,14 @@ public class MovieController {
 	@Autowired
 	RateRepository rateRepository;
 
-	@Autowired
-	MovieService movieService;
+	@Autowired MovieEngine movieEngine;
 
 	@Autowired
 	WatchingMovieRepository watchingMovieRepository;
 
 	@RequestMapping(value="",method=RequestMethod.GET)
 	public String list(Model model, Pageable pageable){
-		Page<Movie> movies = movieService.listAllByPage(pageable);
+		Page<Movie> movies = movieEngine.listAllByPage(pageable);
 		model.addAttribute("movies", movies);
 		model.addAttribute("size", movies.getTotalPages());
 		return "movie/movieList";
@@ -70,19 +68,7 @@ public class MovieController {
 			userRate = userRates.get(0).getRate();
 		}
 
-		//recommends movies
-		List<Movie> catMovies = new ArrayList<Movie>();
-
-		for(Movie m: movieRepository.findAll()){
-			if(m.getCatName().equals(movie.getCatName())){
-				if(m.getId() != movie.getId()){
-					catMovies.add(m);
-				}
-			}
-		}
-
-
-		model.addAttribute("catMovies", catMovies);
+		model.addAttribute("catMovies", movieEngine.getRecommendedMovies(movie));
 
 		model.addAttribute("movie", movie);
 		model.addAttribute("userRate", userRate);

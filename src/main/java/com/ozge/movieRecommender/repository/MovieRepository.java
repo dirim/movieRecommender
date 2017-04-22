@@ -12,4 +12,5 @@ import java.util.List;
  */
 @Repository
 public interface MovieRepository extends PagingAndSortingRepository<Movie, Long> {
+	List<Movie> findByCatNameNot(String catName);
 }

@@ -25,6 +25,9 @@ public class Movie {
 
 	private double imdbRate;
 
+	@Column(length = 10485760)
+	private String overview;
+
 	private String poster;
 
 	@Transient
@@ -141,6 +144,14 @@ public class Movie {
 
 	public void setRates(List<Rate> rates) {
 		this.rates = rates;
+	}
+
+	public String getOverview() {
+		return overview;
+	}
+
+	public void setOverview(String overview) {
+		this.overview = overview;
 	}
 
 	public String getPoster() {

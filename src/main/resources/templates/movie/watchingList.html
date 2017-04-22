@@ -16,7 +16,7 @@
                                     <div class="header"><a th:href="@{'/movies/' + *{watchingMovie.movie.id}}" th:text="*{watchingMovie.movie.movieName}" /></div>
                                     <div class="description" th:text="*{watchingMovie.movie.catName}"></div>
                                     <div class="information" th:text="*{watchingMovie.movie.year}"></div>
-                                    
+
                                     <!--When user rates movie, user cannot add movie to watching list  -->
                                     <!--<div class="information" th:if="*{watchingMovie.movie.avgRate > 0}" th:text="${#numbers.formatDecimal(movie.avgRate, 1, 1)}"></div>-->
                                 </div>
