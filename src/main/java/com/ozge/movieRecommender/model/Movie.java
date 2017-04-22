@@ -17,7 +17,7 @@ public class Movie {
 
 	private String movieName;
 
-	private int year;
+	private String year;
 
 	private String catName;
 
@@ -45,7 +45,7 @@ public class Movie {
 	public Movie() {
 	}
 
-	public Movie(String movieName, int year, String catName, String imdbId, double imdbRate) {
+	public Movie(String movieName, String year, String catName, String imdbId, double imdbRate) {
 		this.movieName = movieName;
 		this.year = year;
 		this.catName = catName;
@@ -89,11 +89,11 @@ public class Movie {
 		this.movieName = movieName;
 	}
 
-	public int getYear() {
+	public String getYear() {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
 

@@ -107,14 +107,14 @@ public class MovieEngine {
 	class OMDBMovie {
 		private double imdbRating;
 		private String Genre;
-		private int Year;
+		private String Year;
 		private String Poster;
 
-		public int getYear() {
+		public String getYear() {
 			return Year;
 		}
 
-		public void setYear(int year) {
+		public void setYear(String year) {
 			Year = year;
 		}
 
