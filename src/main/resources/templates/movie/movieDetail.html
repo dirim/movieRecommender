@@ -50,6 +50,13 @@
                        <!--See Trailer-->
                     <!--</div>-->
                 <!--</div>-->
+
+                <div class="extra">
+                    <button class="ui adding button">
+                        <i class="add square icon"></i>
+                        Add Watching List
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -68,9 +75,6 @@
                                 </div>
                                 <div class="content" >
                                     <div class="header"><a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.movieName}" /></div>
-                                    <div class="meta">
-                                        <i class="add square icon"></i>
-                                    </div>
                                     <div class="description" th:text="${movie.catName}"></div>
                                     <div class="information" th:text="${movie.year}"></div>
                                     <div class="information" th:if="${movie.avgRate > 0}" th:text="${#numbers.formatDecimal(movie.avgRate, 1, 1)}"></div>
@@ -114,6 +118,27 @@
                     } else {
                         document.getElementById('rate').innerHTML = data.toFixed(1);
                     }
+                }
+            });
+        })
+
+        const addingButton = $('.ui.adding.button');
+        addingButton.click(function () {
+            const watchingMovieObject = {
+                movieId: movieId,
+                userId: userId
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/movies/" + movieId + "/watchingList",
+                data: JSON.stringify(watchingMovieObject),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(data) {
+                    successmessage = 'Data was succesfully added';
                 }
             });
         })

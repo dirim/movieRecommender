@@ -30,6 +30,9 @@ public class User implements UserDetails {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Rate> rates;
 
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<WatchingMovie> watchingMovies;
+
 	public User() {
 	}
 
@@ -38,6 +41,14 @@ public class User implements UserDetails {
 		this.password = password;
 		this.email = email;
 		this.age = age;
+	}
+
+	public List<WatchingMovie> getWatchingMovies() {
+		return watchingMovies;
+	}
+
+	public void setWatchingMovies(List<WatchingMovie> watchingMovies) {
+		this.watchingMovies = watchingMovies;
 	}
 
 	public User(String username) {

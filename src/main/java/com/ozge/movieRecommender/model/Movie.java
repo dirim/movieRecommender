@@ -36,6 +36,9 @@ public class Movie {
 	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
 	private List<Rate> rates;
 
+	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+	private List<WatchingMovie> watchingMovies;
+
 	public Movie() {
 	}
 
@@ -57,6 +60,14 @@ public class Movie {
 		}
 
 		this.avgRate = Double.isNaN(sum / rates.size()) ? 0 : sum / rates.size();
+	}
+
+	public List<WatchingMovie> getWatchingMovies() {
+		return watchingMovies;
+	}
+
+	public void setWatchingMovies(List<WatchingMovie> watchingMovies) {
+		this.watchingMovies = watchingMovies;
 	}
 
 	public Long getId() {

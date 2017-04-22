@@ -3,10 +3,13 @@ package com.ozge.movieRecommender.controller;
 import com.ozge.movieRecommender.model.Movie;
 import com.ozge.movieRecommender.model.Rate;
 import com.ozge.movieRecommender.model.User;
+import com.ozge.movieRecommender.model.WatchingMovie;
 import com.ozge.movieRecommender.model.dto.RateDTO;
+import com.ozge.movieRecommender.model.dto.WatchingMovieDTO;
 import com.ozge.movieRecommender.repository.MovieRepository;
 import com.ozge.movieRecommender.repository.RateRepository;
 import com.ozge.movieRecommender.repository.UserRepository;
+import com.ozge.movieRecommender.repository.WatchingMovieRepository;
 import com.ozge.movieRecommender.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,11 +44,8 @@ public class MovieController {
 	@Autowired
 	MovieService movieService;
 
-//	@RequestMapping(value = "", method = RequestMethod.GET)
-//	public String listMovies(Model model){
-//		model.addAttribute("movies", this.movieRepository.findAll());
-//		return "movie/movieList";
-//	}
+	@Autowired
+	WatchingMovieRepository watchingMovieRepository;
 
 	@RequestMapping(value="",method=RequestMethod.GET)
 	public String list(Model model, Pageable pageable){
@@ -54,8 +54,6 @@ public class MovieController {
 		model.addAttribute("size", movies.getTotalPages());
 		return "movie/movieList";
 	}
-
-
 
 	@GetMapping("/{id}")
 	public String showMovie(Model model, @AuthenticationPrincipal User user, @PathVariable("id") Long id){
@@ -131,6 +129,17 @@ public class MovieController {
 		}
 
 		return ((movie.getAvgRate() * (movie.getRates().size() - 1)) + rateDto.getRate()) / movie.getRates().size();
+	}
+
+	@PostMapping(value = "/{id}/watchingList", produces = "application/json")
+	@ResponseBody
+	public WatchingMovie addWatchingMovie(@PathVariable("id") Long id, @RequestBody WatchingMovieDTO watchingMovieDTO) {
+		Movie movie = movieRepository.findOne(watchingMovieDTO.getMovieId());
+		User user = userRepository.findOne(watchingMovieDTO.getUserId());
+		WatchingMovie watchingMovie = new WatchingMovie(user, movie);
+		watchingMovieRepository.save(watchingMovie);
+
+		return watchingMovie;
 	}
 
 }

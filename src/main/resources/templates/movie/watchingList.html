@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
+<th:block layout:fragment="content">
+
+    <h2>Watching List</h2>
+    <div class="movies-wrapper">
+        <div class="ui basic segment">
+            <div class="ui link cards">
+                <div class="ui grid">
+                    <th:block th:each="watchingMovie : ${watchingMovies}">
+                        <div class="four wide column">
+                            <div class="ui card">
+                                <div class="image">
+                                    <img th:src="*{watchingMovie.movie.poster}"/>
+                                </div>
+                                <div class="content" >
+                                    <div class="header"><a th:href="@{'/movies/' + *{watchingMovie.movie.id}}" th:text="*{watchingMovie.movie.movieName}" /></div>
+                                    <div class="description" th:text="*{watchingMovie.movie.catName}"></div>
+                                    <div class="information" th:text="*{watchingMovie.movie.year}"></div>
+                                    
+                                    <!--When user rates movie, user cannot add movie to watching list  -->
+                                    <!--<div class="information" th:if="*{watchingMovie.movie.avgRate > 0}" th:text="${#numbers.formatDecimal(movie.avgRate, 1, 1)}"></div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+</html>
