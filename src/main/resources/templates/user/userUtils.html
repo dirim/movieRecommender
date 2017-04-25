@@ -5,7 +5,7 @@
 <th:block th:fragment="userAvatar(url, size)">
     <div class="ui circular segment">
         <img class="ui circular image user-avatar"
-             th:src="'http://localhost:8000/avatar/' + ${url}"
+             th:src="'http://localhost:8000/workspace/uploadsAvatar/avatar/' + ${url}"
              th:classappend="${size ?: 'medium'}"/>
     </div>
 </th:block>
@@ -22,7 +22,7 @@
             </form>
         </div>
         <img class="ui circular image user-avatar"
-             th:src="'http://localhost:8000/avatar/' + ${url}"
+             th:src="'http://localhost:8000/workspace/uploadsAvatar/avatar/' + ${url}"
              th:classappend="${size ?: 'medium'}"/>
     </div>
 
@@ -59,7 +59,7 @@
                 processData: false,
                 contentType: false,
                 success: function(data) {
-                    $(".user-avatar").attr("src", "http://localhost:8000/avatar/" + data);
+                    $(".user-avatar").attr("src", "http://localhost:8000/workspace/uploadsAvatar/avatar/" + data);
                 },
                 error: function(data){
                     alert(data.responseText);

@@ -117,6 +117,7 @@ public class UserController {
 			}
 		}
 
+		model.addAttribute("user", user);
 		model.addAttribute("similarUsers", similarUsers);
 		model.addAttribute("nameRateMap", nameRateMap);
 
