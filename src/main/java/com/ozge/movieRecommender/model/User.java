@@ -24,6 +24,8 @@ public class User implements UserDetails {
 
 	private int age;
 
+	private String avatar;
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	private Set<Movie> watchedMovies = new HashSet<>();
 
@@ -109,6 +111,14 @@ public class User implements UserDetails {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	@Override

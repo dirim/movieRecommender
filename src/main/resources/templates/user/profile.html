@@ -1,15 +1,26 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
 <th:block layout:fragment="content">
 
+    <!--<div class="user-profile-wrapper">-->
+        <!--<div class="user-profile-info">-->
+            <!--<th:block th:include="user/userUtils::userAvatar(${user.getAvatar()}, 'small')" />-->
+        <!--</div>-->
+    <!--</div>-->
+
     <div class="row">
         <div class="user-info ui left aligned basic segment">
             <div class="ui grid">
-                <div class="six wide column">
-                    <img class="ui avatar image" />
+                <div class="ten wide column">
+                    <!--<img class="ui avatar image" />-->
+                    <!--<div class="user-profile-wrapper">-->
+                        <!--<div class="user-profile-info">-->
+                            <!--<th:block th:include="user/userUtils::userAvatar(${user.getAvatar()}, 'small')" />-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
-                <div class="six wide column"></div>
+                <div class="four wide column"></div>
                 <div class="four wide column">
-                    <i class="add user icon"></i>
+                    <!--<i class="add user icon"></i>-->
                     <!--<a th:href="@{'/users/' + ${user.username} + '/update'}">-->
                         <!--<button class="ui right floated button">Update</button>-->
                     <!--</a>-->
@@ -17,24 +28,26 @@
             </div>
 
             <div class="ui grid">
-                <div class="six wide column">
-                    <a th:text="${user.username}" th:href="@{'/users/' + ${user.username} + '/update'}"></a>
+                <div class="six wide column" style="font-size: x-large">
+                    <b><ins><a th:text="${user.username}" th:href="@{'/users/' + ${user.username} + '/update'}" style="color:black;"></a></ins></b>
                 </div>
                 <div class="six wide column"></div>
                 <div class="four wide column">
-                    <a th:href="@{/}">
-                        <h5>Watching List</h5>
+                    <a th:href="@{/watchings}">
+                        <ins><h4 style="color:black;">Watching List</h4></ins>
                     </a>
                 </div>
             </div>
+
+
             <div th:if="${nameRateMap.size() > 0}">
-                <div class="ui grid">
+                <div class="ui grid" style="padding-top: 2.5rem">
                     <div class="one wide column">
                     </div>
                     <div class="eleven wide column">
                         <fieldset>
-                            <legend>Watched Movie List</legend>
-                            <table class="ui celled table">
+                            <legend><strong>Watched Movie List</strong></legend>
+                            <table class="ui selectable inverted table">
                                 <thead>
                                 <tr>
                                     <th>Movie Name</th>

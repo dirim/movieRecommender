@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+<body>
+
+<th:block th:fragment="userAvatar(url, size)">
+    <div class="ui circular segment">
+        <img class="ui circular image user-avatar"
+             th:src="'http://localhost:8000/avatar/' + ${url}"
+             th:classappend="${size ?: 'medium'}"/>
+    </div>
+</th:block>
+
+<th:block th:fragment="userAvatarWithUploadForm(url, size)">
+    <div class="ui blurring circular segment">
+        <div class="ui dimmer">
+            <form id="avatarUploadForm" action="#" method="post" enctype="multipart/form-data"
+                  th:action="@{'/users/upload-avatar'}">
+                <label for="avatar" class="ui icon basic button">
+                    <i class="cloud icon"></i>
+                    New..</label>
+                <input type="file" name="userAvatar" id="avatar" style="display:none"/>
+            </form>
+        </div>
+        <img class="ui circular image user-avatar"
+             th:src="'http://localhost:8000/avatar/' + ${url}"
+             th:classappend="${size ?: 'medium'}"/>
+    </div>
+
+    <script>
+        $(document).on("ready", function(){
+
+            $('.ui.blurring.circular.segment').dimmer({
+                on: 'hover'
+            });
+
+            $("#avatarUploadForm").on("submit", function(e) {
+
+                e.preventDefault();
+
+                avatarData = new FormData();
+                avatarData.append('userAvatar', $("#avatar")[0].files[0]);
+
+                requestUrl = $(this)[0].action;
+                uploadAvatar(avatarData, requestUrl);
+            });
+
+            $("#avatar").on("change", function(){
+                $("#avatarUploadForm").submit();
+            });
+
+        });
+
+        var uploadAvatar = function(avatarData, requestUrl) {
+            $.ajax({
+                url: requestUrl,
+                method: "POST",
+                data: avatarData,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    $(".user-avatar").attr("src", "http://localhost:8000/avatar/" + data);
+                },
+                error: function(data){
+                    alert(data.responseText);
+                }
+            });
+        };
+
+    </script>
+</th:block>
+
+</body>
+</html>

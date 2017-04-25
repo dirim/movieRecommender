@@ -38,14 +38,17 @@
 <div class="ui grid container">
         <div class="four wide column" sec:authorize="isAuthenticated()">
             <div class="ui left fixed vertical inverted menu">
-                <a class="item" th:href="@{/}">
-                    <div class="icon">
-                        <i class="home large icon"></i>
-                    </div>
-                </a>
+                <!--<a class="item" th:href="@{/}">-->
+                    <!--<div class="icon">-->
+                        <!--<i class="home large icon"></i>-->
+                    <!--</div>-->
+                <!--</a>-->
                 <div sec:authorize="isAuthenticated()">
                     <a class="item" th:href="@{/movies}">
-                        Movies List
+                        <div class="icon">
+                            <i class="home big icon"> Movies List </i>
+                        </div>
+
                     </a>
                 </div>
             </div>

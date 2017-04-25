@@ -9,6 +9,9 @@ import com.ozge.movieRecommender.repository.UserRepository;
 import com.ozge.movieRecommender.service.UserService;
 import org.apache.catalina.users.AbstractUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,9 +19,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.*;
 
 @Controller
@@ -31,6 +38,8 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	private Environment environment;
 //	@Autowired
 //	private PasswordEncoder passwordEncoder;
 
@@ -143,5 +152,52 @@ public class UserController {
 		}
 		return "redirect:/users/" + profileInfoDto.getUsername();
 	}
+
+	@RequestMapping(value = "/upload-avatar", method = RequestMethod.POST)
+	public @ResponseBody
+	ResponseEntity<String> uploadAvatar(@RequestParam("userAvatar") MultipartFile uploadedFile,
+			Model model,
+			@AuthenticationPrincipal User authenticatedUser){
+
+		String path = environment.getProperty("upload.user.avatar.url");
+
+		if (!uploadedFile.isEmpty() && checkIfFileIsImage(uploadedFile)) {
+			try {
+				byte[] bytes = uploadedFile.getBytes();
+				UUID uuid = UUID.randomUUID();
+				String filename = String.valueOf(uuid) + "." + getFileExtension(uploadedFile);
+				File file = new File(path + filename);
+
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(file));
+				stream.write(bytes);
+				stream.close();
+
+				User user = this.userRepository.findById(authenticatedUser.getId());
+				user.setAvatar(filename);
+//				this.userService.update(user);
+				this.userRepository.save(user);
+				return new ResponseEntity(user.getAvatar(), HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity("You failed to upload because of " + e.getMessage(), HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			return new ResponseEntity("You failed to upload avatar because the file was empty or not an image file.", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	private String getFileExtension(MultipartFile file) {
+
+		return file.getContentType().split("/")[1];
+
+	}
+
+	private boolean checkIfFileIsImage(MultipartFile file) {
+
+		// TODO find all possible image mime types
+
+		return file.getContentType().split("/")[0].equals("image");
+	}
+
 
 }

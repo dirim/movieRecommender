@@ -127,39 +127,29 @@
                 }
             });
         })
+
+
+    const addingButton = $('.ui.adding.button');
+    addingButton.click(function () {
+        const watchingMovieObject = {
+            movieId: movieId,
+            userId: userId
+        };
+        $.ajax({
+        type: "POST",
+        url: "/movies/" + movieId + "/watchingList",
+        data: JSON.stringify(watchingMovieObject),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        success: function(data) {
+            successmessage = 'Data was succesfully added';
+            }
+        });
+    })
+
     </script>
-
-    <!--<script th:inline="javascript">-->
-        <!--/*<![CDATA[*/-->
-        <!--const movieId = [[${movie.id}]];-->
-        <!--const userId = [[${user.id}]];-->
-        <!--/*]]>*/-->
-        <!--const addingButton = $('.ui.adding.button');-->
-        <!--addingButton.click(function () {-->
-            <!--const watchingMovieObject = {-->
-                <!--movieId: movieId,-->
-                <!--userId: userId-->
-            <!--};-->
-
-            <!--$.ajax({-->
-                <!--type: "POST",-->
-                <!--url: &#45;&#45;,-->
-                <!--data: JSON.stringify(watchingMovieObject),-->
-                <!--headers: {-->
-                    <!--'Accept': 'application/json',-->
-                    <!--'Content-Type': 'application/json'-->
-                <!--},-->
-<!--//                success: function(data) {-->
-<!--//                    const rateField = document.getElementById('rate');-->
-<!--//                    if (rateField == null) {-->
-<!--//                        $('<div class="row" id="avgRateRow"><h4 th:inline="text">Average Rate: <small id="rate">' + data.toFixed(1) + '</small></h4></div>').insertAfter('#imdbRateRow');-->
-<!--//                    } else {-->
-<!--//                        document.getElementById('rate').innerHTML = data.toFixed(1);-->
-<!--//                    }-->
-<!--//                }-->
-            <!--});-->
-        <!--})-->
-    <!--</script>-->
 
 </th:block>
 </html>
